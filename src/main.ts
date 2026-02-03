@@ -58,14 +58,24 @@ function registerTransactions() {
 
   transactions.forEach(transaction => {
     const li = document.createElement('li');
-    li.textContent = `${transaction.note} ${transaction.amount} kr (${transaction.category})`;
+
+    // sätta - framför utgifter i listan
+    let operatorAmount;
+    if (transaction.type === 'expense') {
+      operatorAmount = `-${transaction.amount} kr`;
+    } else {
+      operatorAmount = `${transaction.amount} kr`;
+    }
+
+    li.textContent = `${transaction.note} ${operatorAmount} kr (${transaction.category})`;
     list.appendChild(li);
 
+    // extra class för färg
     li.classList.add(transaction.type);
     list.appendChild(li);
   });
 
-  // testa reduce istället
+  // testa reduce istället för summa-balance
   const totalBalance = transactions.reduce((currentBalance, transaction) => {
     if (transaction.type === 'income') {
       return currentBalance + transaction.amount;
