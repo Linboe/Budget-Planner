@@ -1,13 +1,68 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fed25d-js-inl2-budget-app-linboe</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fed25d-js-inl2-budget-app-linboe</title>
+</head>
+
+<body>
+  <h1>Budget planner</h1>
+  <h2>Ny transaktion</h2>
+  <form>
+    <fieldset>
+      <label>
+        <span>Utgift</span>
+        <input id="expenseAmount" type="number" />
+      </label>
+
+      <label>
+        <span>Anteckning</span>
+        <input id="noteExpense" type="text" />
+      </label>
+
+      <div>
+        <select id="categoryExpense">
+          <option value="" disabled selected>Välj kategori</option>
+          <option value="necessary">Nödvändigt</option>
+          <option value="fun">Leva lite</option>
+          <option value="food">Mums</option>
+        </select>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <label>
+        <span>Inkomst</span>
+        <input id="incomeAmount" type="number" />
+      </label>
+
+      <label>
+        <span>Anteckning</span>
+        <input id="noteIncome" type="text" />
+      </label>
+
+      <div>
+        <select id="categoryIncome">
+          <option value="" disabled selected>Välj kategori</option>
+          <option value="salary">Lön</option>
+          <option value="extra">Extra inkomst</option>
+        </select>
+      </div>
+    </fieldset>
+    <button type="submit" id="register">Registrera</button>
+
+
+  </form>
+
+  <section id="transactions">
+    <span id="balance">0</span>
+    <ul id="list"></ul>
+  </section>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
