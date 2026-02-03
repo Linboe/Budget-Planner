@@ -2,15 +2,15 @@
 import './style.css';
 
 /**
- *      Ett fält för att mata in en utgift (belopp och beskrivning)
- *      Ett fält för att mata in en inkomst (belopp och beskrivning)
+ *  x   Ett fält för att mata in en utgift (belopp och beskrivning)
+ *  x   Ett fält för att mata in en inkomst (belopp och beskrivning)
  *      Bredvid varje budgetpost ska det finnas en radera-knapp
  *          (när utskrivet i list)
- *      Det ska visas en balans (inkomster minus utgifter)
+ *  x   Det ska visas en balans (inkomster minus utgifter)
  *          - anpassas vid borttagning av värde i list
  *      Balansens ska färgkodas beroende på om det är ett positivt eller negativt värde
- *      Balansen ska uppdateras varje gång en ny utgift eller inkomst matas in
- *      Till varje budgetpost ska det gå att välja en kategori från en dropdown-lista (select)
+ *  x   Balansen ska uppdateras varje gång en ny utgift eller inkomst matas in
+ *  x   Till varje budgetpost ska det gå att välja en kategori från en dropdown-lista (select)
  *      Informationen ska sparas i local storage så att när användaren kommer till sidan nästa gång, så ska informationen finnas kvar. Nytt
  *      Kategorierna ska läsas in via JSON. Vi går igenom detta på lektionen.
  */
@@ -51,15 +51,17 @@ registerBtn.addEventListener('click', registerTransaction => {
   }
 
   registerTransactions();
-  budgetForm.reset();
 });
 
 function registerTransactions() {
   list.innerHTML = '';
 
-  transactions.forEach(tx => {
+  transactions.forEach(transaction => {
     const li = document.createElement('li');
-    li.textContent = `${tx.note} ${tx.amount} kr (${tx.category})`;
+    li.textContent = `${transaction.note} ${transaction.amount} kr (${transaction.category})`;
+    list.appendChild(li);
+
+    li.classList.add(transaction.type);
     list.appendChild(li);
   });
 
@@ -73,4 +75,5 @@ function registerTransactions() {
   }, 0);
 
   balance.textContent = totalBalance;
+  budgetForm.reset();
 }

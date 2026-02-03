@@ -18,3 +18,15 @@ button {
   display: block;
   margin-bottom: 10px;
 }
+
+ul li {
+  list-style: none;
+}
+
+.expense {
+  color: rgb(165, 5, 5);
+}
+
+.income {
+  color: rgb(0, 173, 0);
+}
