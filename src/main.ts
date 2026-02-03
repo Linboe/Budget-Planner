@@ -57,31 +57,20 @@ registerBtn.addEventListener('click', registerTransaction => {
 function registerTransactions() {
   list.innerHTML = '';
 
-  let totalBalance = 0;
-
   transactions.forEach(tx => {
     const li = document.createElement('li');
     li.textContent = `${tx.note} ${tx.amount} kr (${tx.category})`;
     list.appendChild(li);
-
-    if (tx.type === 'income') {
-      totalBalance += tx.amount;
-    } else {
-      totalBalance -= tx.amount;
-    }
   });
+
+  // testa reduce istället
+  const totalBalance = transactions.reduce((currentBalance, transaction) => {
+    if (transaction.type === 'income') {
+      return currentBalance + transaction.amount;
+    } else {
+      return currentBalance - transaction.amount;
+    }
+  }, 0);
 
   balance.textContent = totalBalance;
 }
-
-/*
-
-function registerTransaction() {
-    registerTransaction.innerHTML +=
-}
-*/
-/* //(e) och e.preventDefault(); tillfälligt för att ej skicka iväg formuläret
-}
-function registerTransaction(e) {
-  e.preventDefault(); 
-*/
