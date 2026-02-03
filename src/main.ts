@@ -62,12 +62,12 @@ function registerTransactions() {
     // sätta - framför utgifter i listan
     let operatorAmount;
     if (transaction.type === 'expense') {
-      operatorAmount = `-${transaction.amount} kr`;
+      operatorAmount = `-${transaction.amount}`;
     } else {
-      operatorAmount = `${transaction.amount} kr`;
+      operatorAmount = `${transaction.amount}`;
     }
 
-    li.textContent = `${transaction.note} ${operatorAmount} kr (${transaction.category})`;
+    li.textContent = `${operatorAmount} kr ${transaction.note} (${transaction.category})`;
     list.appendChild(li);
 
     // extra class för färg

@@ -2,6 +2,33 @@ body {
   text-align: center;
 }
 
+h1 {
+  color: rgb(0, 134, 63);
+  padding-bottom: 18px;
+  font-size: 3rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  font-style: normal;
+}
+
+label,
+.income,
+.expense,
+.balance,
+button {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  font-style: normal;
+}
+
 form {
   display: flex;
   flex-direction: row;
@@ -29,4 +56,8 @@ ul li {
 
 .income {
   color: rgb(0, 173, 0);
+}
+
+.balance {
+  font-weight: bold;
 }
