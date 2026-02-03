@@ -2,6 +2,7 @@
 import './style.css';
 
 const registerBtn = document.querySelector('#register');
+const budgetForm = document.querySelector('#budgetForm');
 const transactions = [];
 const expenseAmount = document.querySelector('#expenseAmount');
 const noteExpense = document.querySelector('#noteExpense');
@@ -36,6 +37,7 @@ registerBtn.addEventListener('click', registerTransaction => {
   }
 
   registerTransactions();
+  budgetForm.reset();
 });
 
 function registerTransactions() {
