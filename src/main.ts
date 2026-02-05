@@ -38,14 +38,25 @@ const deleteBtn = document.querySelector('#deleteBtn');
 noteExpense.addEventListener('keydown', checkInputConfirm);
 deleteBtn.addEventListener('click', deleteFromLocalStorage);
 
-let myData = [
-  /*{
-    text: InputDeviceInfo.value,
-    completed: false,
-  },*/
-];
+let myData = [];
 
-registerBtn.addEventListener('click', readFromLocalStorage); //var???
+registerBtn.addEventListener('click', addTransaction);
+
+function addTransaction() {
+  if (noteExpense.value.trim().length === 0) {
+    return;
+  } // om length === 0 är det en tom sträng ---> return
+
+  myData.push({
+    text: noteExpense.value,
+    completed: false,
+  });
+
+  noteExpense.value = '';
+
+  saveToLocalStorage();
+  writeToScreen();
+}
 
 function checkInputConfirm(e) {
   if (e.key !== 'Enter') {
@@ -53,16 +64,7 @@ function checkInputConfirm(e) {
   }
   e.preventDefault(); // för att inte formuläret ska skickas varje gång man trycker enter
 
-  myData.push({
-    text: noteExpense.value,
-    completed: false, //byt till andra värden
-  });
-
-  noteExpense.value = '';
-
-  //console.log('myData:', myData);
-  saveToLocalStorage();
-  writeToScreen(); //skriva ut på skärmen
+  addTransaction();
 }
 
 function saveToLocalStorage() {
@@ -83,6 +85,7 @@ function readFromLocalStorage() {
   }
 
   myData = JSON.parse(savedValue); //inbyggd funktion som gör om text till array igen = återställer
+  writeToScreen();
   console.log('myData är nu', myData);
 }
 
