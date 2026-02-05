@@ -126,8 +126,15 @@ function writeToScreen() {
       operatorAmount = `${t.amount}`;
     }
 
+    let typeClass;
+    if (t.type === 'expense') {
+      typeClass = 'expense';
+    } else {
+      typeClass = 'income';
+    }
+
     html += `
-      <li>${operatorAmount} kr - ${t.note} (${t.category})
+      <li class="${typeClass}">${operatorAmount} kr - ${t.note} (${t.category})
         <button class="delete" data-id="${index}">Radera</button>
       </li>`;
   });
