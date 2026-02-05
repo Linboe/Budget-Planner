@@ -12,7 +12,7 @@ import categories from './categories.json';
  *  x   Balansen ska uppdateras varje gång en ny utgift eller inkomst matas in
  *  x   Till varje budgetpost ska det gå att välja en kategori från en dropdown-lista (select)
  *  x   Informationen ska sparas i local storage så att när användaren kommer till sidan nästa gång, så ska informationen finnas kvar. Nytt
- *      Kategorierna ska läsas in via JSON. Vi går igenom detta på lektionen.
+ *  x   Kategorierna ska läsas in via JSON. Vi går igenom detta på lektionen.
  */
 
 //const budgetForm = document.querySelector('#budgetForm'); //anv endast i första kodförsöket
@@ -42,9 +42,20 @@ registerBtn.addEventListener('click', addTransaction);
 let transactions = []; //sparar alla transaktioner
 const LS_DB_ID = 'transactions';
 
+/*
+------------------------------------------------------------------------
+------------------------ Enter för ALLA input --------------------------
+------------------------------------------------------------------------
+*/
 [incomeAmount, noteIncome, expenseAmount, noteExpense].forEach(input => {
   input.addEventListener('keydown', checkInputConfirm);
-}); //för att Enter ska fungera i alla input-fält
+});
+
+/*
+------------------------------------------------------------------------
+---------------------- få input-info till object  ----------------------
+------------------------------------------------------------------------
+*/
 
 function addTransaction() {
   const incomeValue = Number(incomeAmount.value);
@@ -83,7 +94,11 @@ function addTransaction() {
   saveToLocalStorage();
   writeToScreen();
 }
-// kategorier JSON
+/*
+------------------------------------------------------------------------
+--------------------------- Kategorier JSON ----------------------------
+------------------------------------------------------------------------
+*/
 if (categoryExpenseDropdown) {
   categories.expenses.forEach(category => {
     categoryExpenseDropdown.innerHTML += `<option value="${category.value}">${category.text}</option>`;
@@ -96,8 +111,11 @@ if (categoryIncomeDropdown) {
   });
 }
 
-console.log(categories);
-
+/*
+------------------------------------------------------------------------
+----------------- för att Enter ska fungera vid input ------------------
+------------------------------------------------------------------------
+*/
 function checkInputConfirm(e) {
   if (e.key !== 'Enter') {
     return;
@@ -107,6 +125,11 @@ function checkInputConfirm(e) {
   addTransaction();
 }
 
+/*
+------------------------------------------------------------------------
+---------------------- Spara till Local Storage ------------------------
+------------------------------------------------------------------------
+*/
 function saveToLocalStorage() {
   const stringified = JSON.stringify(transactions);
 
@@ -114,6 +137,11 @@ function saveToLocalStorage() {
   console.log('Data saved.');
 }
 
+/*
+------------------------------------------------------------------------
+------------------------ Läsa av info från LS --------------------------
+------------------------------------------------------------------------
+*/
 function readFromLocalStorage() {
   const savedValue = localStorage.getItem(LS_DB_ID); //localStorage inbyggd EJ variabel
 
@@ -127,6 +155,11 @@ function readFromLocalStorage() {
   console.log('transactions är nu', transactions);
 }
 
+/*
+------------------------------------------------------------------------
+----------------------- skriva ut transaktioner ------------------------
+------------------------------------------------------------------------
+*/
 const dataHtmlEl = document.querySelector('#transactions');
 function writeToScreen() {
   let html = '<ul>';
@@ -140,6 +173,7 @@ function writeToScreen() {
       operatorAmount = `${t.amount}`;
     }
 
+    //sätta class för färgkodning av expense vs income
     let typeClass;
     if (t.type === 'expense') {
       typeClass = 'expense';
@@ -157,11 +191,17 @@ function writeToScreen() {
 
   dataHtmlEl.innerHTML = html;
 
+  //deleteBtn v
   document.querySelectorAll('button.delete').forEach(btn => {
     btn.addEventListener('click', deletetTransaction);
   });
 
-  // testa reduce istället: summa-balance
+  /*
+------------------------------------------------------------------------
+------------------------ Räkna ut total balans -------------------------
+------------------------------------------------------------------------
+*/
+
   const totalTransactionBalance = transactions.reduce((currentBalance, t) => {
     if (t.type === 'income') {
       return currentBalance + t.amount;
@@ -173,6 +213,11 @@ function writeToScreen() {
   totalBalance.textContent = `Total balans: ${totalTransactionBalance} kr`;
 }
 
+/*
+------------------------------------------------------------------------
+--------------------- ta bort en transaktion från ----------------------
+------------------------------------------------------------------------
+*/
 function deletetTransaction(e) {
   const id = Number(e.target.dataset.id);
 
@@ -192,6 +237,7 @@ readFromLocalStorage();
 writeToScreen();
 
 /*
+// ------------------- OBS IGNORERA DENNA KOD NEDAN --------------------
 // ------------------ första koden innan LS och JSON -------------------
 // ----------------------- kvar för egen skull  ------------------------
 // ---------------------------------------------------------------------
