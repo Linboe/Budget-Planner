@@ -15,9 +15,8 @@ import './style.css';
  *      Kategorierna ska läsas in via JSON. Vi går igenom detta på lektionen.
  */
 
-const registerBtn = document.querySelector('#register');
-const budgetForm = document.querySelector('#budgetForm');
-const transactions = [];
+//const budgetForm = document.querySelector('#budgetForm'); //anv endast i första kodförsöket
+
 const expenseAmount = document.querySelector('#expenseAmount');
 const noteExpense = document.querySelector('#noteExpense');
 const categoryExpense = document.querySelector('#categoryExpense');
@@ -26,33 +25,60 @@ const incomeAmount = document.querySelector('#incomeAmount');
 const noteIncome = document.querySelector('#noteIncome');
 const categoryIncome = document.querySelector('#categoryIncome');
 
+/*
 const balance = document.querySelector('#balance');
-const list = document.querySelector('#list');
+const list = document.querySelector('#list');*/ //anv endast i första kodförsöket
+
+const registerBtn = document.querySelector('#register');
+const deleteBtn = document.querySelector('#deleteBtn');
 
 // --------------------- annat sätt ----------------------
 // ---------- Local Storage och lite JSON f.4/2 ----------
 
-const LS_DB_ID = 'noteExpense';
-const deleteBtn = document.querySelector('#deleteBtn');
-
-noteExpense.addEventListener('keydown', checkInputConfirm);
+registerBtn.addEventListener('click', addTransaction);
+//noteExpense.addEventListener('keydown', checkInputConfirm);
 deleteBtn.addEventListener('click', deleteFromLocalStorage);
 
-let myData = [];
+let transactions = []; //sparar alla transaktioner
+const LS_DB_ID = 'transactions';
 
-registerBtn.addEventListener('click', addTransaction);
+[incomeAmount, noteIncome, expenseAmount, noteExpense].forEach(input => {
+  input.addEventListener('keydown', checkInputConfirm);
+}); //för att Enter ska fungera i alla input-fält
 
 function addTransaction() {
-  if (noteExpense.value.trim().length === 0) {
-    return;
-  } // om length === 0 är det en tom sträng ---> return
+  const incomeValue = Number(incomeAmount.value);
+  const incomeNote = noteIncome.value.trim();
+  const incomeCategory = categoryIncome.value;
 
-  myData.push({
-    text: noteExpense.value,
-    completed: false,
-  });
+  if (incomeValue !== 0 && incomeNote !== '') {
+    transactions.push({
+      amount: incomeValue,
+      note: incomeNote,
+      category: incomeCategory,
+      type: 'income',
+    });
+  }
 
+  const expenseValue = Number(expenseAmount.value);
+  const expenseNote = noteExpense.value.trim();
+  const expenseCategory = categoryExpense.value;
+
+  if (expenseValue !== 0 && expenseNote !== '') {
+    transactions.push({
+      amount: expenseValue,
+      note: expenseNote,
+      category: expenseCategory,
+      type: 'expense',
+    });
+  }
+
+  incomeAmount.value = '';
+  noteIncome.value = '';
+  categoryIncome.value = '';
+  expenseAmount.value = '';
   noteExpense.value = '';
+  categoryExpense.value = '';
 
   saveToLocalStorage();
   writeToScreen();
@@ -68,7 +94,7 @@ function checkInputConfirm(e) {
 }
 
 function saveToLocalStorage() {
-  const stringified = JSON.stringify(myData);
+  const stringified = JSON.stringify(transactions);
 
   localStorage.setItem(LS_DB_ID, stringified); //detta värde måste vara unikt för varje input
   console.log('Data saved.');
@@ -84,19 +110,19 @@ function readFromLocalStorage() {
     return;
   }
 
-  myData = JSON.parse(savedValue); //inbyggd funktion som gör om text till array igen = återställer
+  transactions = JSON.parse(savedValue); //inbyggd funktion som gör om text till array igen = återställer
   writeToScreen();
-  console.log('myData är nu', myData);
+  console.log('transactions är nu', transactions);
 }
 
 const dataHtmlEl = document.querySelector('#transactions');
 function writeToScreen() {
   let html = '<ul>';
 
-  myData.forEach((todo, index) => {
+  transactions.forEach((t, index) => {
     html += `
-      <li>${todo.text} - ${todo.completed}
-        <button class="delete" data-id="${index}" data-completed="false">Radera</button>
+      <li>${t.amount} - ${t.note} (${t.category})
+        <button class="delete" data-id="${index}">Radera</button>
       </li>`;
   });
 
@@ -105,23 +131,21 @@ function writeToScreen() {
   dataHtmlEl.innerHTML = html;
 
   document.querySelectorAll('button.delete').forEach(btn => {
-    btn.addEventListener('click', deleteToDo);
+    btn.addEventListener('click', deletetTransaction);
   });
 }
 
-function deleteToDo(e) {
+function deletetTransaction(e) {
   const id = Number(e.target.dataset.id);
 
-  myData.splice(id, 1); //1 visar att endast en grej ska raderas
-
+  transactions.splice(id, 1); //1 visar att endast en grej ska raderas
   saveToLocalStorage();
-
   writeToScreen();
 }
 
 function deleteFromLocalStorage() {
   localStorage.removeItem(LS_DB_ID);
-  myData = [];
+  transactions = [];
 
   writeToScreen(); //kom ihåg detta så det syns att det tagits bort
 }
