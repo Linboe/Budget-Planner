@@ -9,13 +9,16 @@ import './style.css';
  *      Det ska visas en balans (inkomster minus utgifter)
  *          - anpassas vid borttagning av värde i list
  *      Balansens ska färgkodas beroende på om det är ett positivt eller negativt värde
- *      Balansen ska uppdateras varje gång en ny utgift eller inkomst matas in
+ *  x   Balansen ska uppdateras varje gång en ny utgift eller inkomst matas in
  *  x   Till varje budgetpost ska det gå att välja en kategori från en dropdown-lista (select)
  *      Informationen ska sparas i local storage så att när användaren kommer till sidan nästa gång, så ska informationen finnas kvar. Nytt
  *      Kategorierna ska läsas in via JSON. Vi går igenom detta på lektionen.
  */
 
 //const budgetForm = document.querySelector('#budgetForm'); //anv endast i första kodförsöket
+//const list = document.querySelector('#list'); //anv endast i första kodförsöket
+//const deleteBtn = document.querySelector('#deleteBtn'); //endast för att testa LS behövs ej nu
+//deleteBtn.addEventListener('click', deleteFromLocalStorage); //endast för att testa LS behövs ej nu
 
 const expenseAmount = document.querySelector('#expenseAmount');
 const noteExpense = document.querySelector('#noteExpense');
@@ -26,14 +29,12 @@ const noteIncome = document.querySelector('#noteIncome');
 const categoryIncome = document.querySelector('#categoryIncome');
 
 const balance = document.querySelector('#totalBalance');
-//const list = document.querySelector('#list'); //anv endast i första kodförsöket
 
 const registerBtn = document.querySelector('#register');
-//const deleteBtn = document.querySelector('#deleteBtn'); //endast för att testa LS behövs ej nu
-//deleteBtn.addEventListener('click', deleteFromLocalStorage);
 
-// --------------------- annat sätt ----------------------
-// ---------- Local Storage och lite JSON f.4/2 ----------
+// ----------------------------------------------------------------------
+// ----------------------------- annat sätt -----------------------------
+// ----------------------------------------------------------------------
 
 registerBtn.addEventListener('click', addTransaction);
 //noteExpense.addEventListener('keydown', checkInputConfirm);
@@ -103,9 +104,7 @@ function readFromLocalStorage() {
   const savedValue = localStorage.getItem(LS_DB_ID); //localStorage inbyggd EJ variabel
 
   if (savedValue === null) {
-    //om inget finns sparat, return pga onödigt resten körs
-    console.warn('Det finns inget sparat i localStorage');
-
+    console.warn('Det finns inget sparat i localStorage'); //om inget finns sparat, return pga onödigt resten körs
     return;
   }
 
@@ -119,8 +118,16 @@ function writeToScreen() {
   let html = '<ul>';
 
   transactions.forEach((t, index) => {
+    //för att (-) ska stå framför expense, t=transactions förkortning
+    let operatorAmount;
+    if (t.type === 'expense') {
+      operatorAmount = `-${t.amount}`;
+    } else {
+      operatorAmount = `${t.amount}`;
+    }
+
     html += `
-      <li>${t.amount} kr - ${t.note} (${t.category})
+      <li>${operatorAmount} kr - ${t.note} (${t.category})
         <button class="delete" data-id="${index}">Radera</button>
       </li>`;
   });
