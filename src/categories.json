@@ -1,0 +1,26 @@
+{
+  "expenses": [
+    {
+      "text": "Nödvändigt",
+      "value": "necessary"
+    },
+    {
+      "text": "Leva lite",
+      "value": "fun"
+    },
+    {
+      "text": "Mums",
+      "value": "yummy"
+    }
+  ],
+  "incomes": [
+    {
+      "text": "Lön",
+      "value": "salary"
+    },
+    {
+      "text": "Extraknäck",
+      "value": "side gigs"
+    }
+  ]
+}

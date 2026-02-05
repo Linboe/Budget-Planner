@@ -1,5 +1,6 @@
 // @ts-nocheck
 import './style.css';
+import categories from './categories.json';
 
 /**
  *  x   Ett fält för att mata in en utgift (belopp och beskrivning)
@@ -21,11 +22,11 @@ import './style.css';
 
 const expenseAmount = document.querySelector('#expenseAmount');
 const noteExpense = document.querySelector('#noteExpense');
-const categoryExpense = document.querySelector('#categoryExpense');
+const categoryExpenseDropdown = document.querySelector('#categoryExpenseDropdown');
 
 const incomeAmount = document.querySelector('#incomeAmount');
 const noteIncome = document.querySelector('#noteIncome');
-const categoryIncome = document.querySelector('#categoryIncome');
+const categoryIncomeDropdown = document.querySelector('#categoryIncomeDropdown');
 
 const totalBalance = document.querySelector('#totalBalance');
 
@@ -48,40 +49,54 @@ const LS_DB_ID = 'transactions';
 function addTransaction() {
   const incomeValue = Number(incomeAmount.value);
   const incomeNote = noteIncome.value.trim();
-  const incomeCategory = categoryIncome.value;
+  const incomeCategoryDropdown = categoryIncomeDropdown.value;
 
   if (incomeValue !== 0 && incomeNote !== '') {
     transactions.push({
       amount: incomeValue,
       note: incomeNote,
-      category: incomeCategory,
+      category: incomeCategoryDropdown,
       type: 'income',
     });
   }
 
   const expenseValue = Number(expenseAmount.value);
   const expenseNote = noteExpense.value.trim();
-  const expenseCategory = categoryExpense.value;
+  const expenseCategoryDropdown = categoryExpenseDropdown.value;
 
   if (expenseValue !== 0 && expenseNote !== '') {
     transactions.push({
       amount: expenseValue,
       note: expenseNote,
-      category: expenseCategory,
+      category: expenseCategoryDropdown,
       type: 'expense',
     });
   }
 
   incomeAmount.value = '';
   noteIncome.value = '';
-  categoryIncome.value = '';
+  categoryIncomeDropdown.value = '';
   expenseAmount.value = '';
   noteExpense.value = '';
-  categoryExpense.value = '';
+  categoryExpenseDropdown.value = '';
 
   saveToLocalStorage();
   writeToScreen();
 }
+// kategorier JSON
+if (categoryExpenseDropdown) {
+  categories.expenses.forEach(category => {
+    categoryExpenseDropdown.innerHTML += `<option value="${category.value}">${category.text}</option>`;
+  });
+}
+
+if (categoryIncomeDropdown) {
+  categories.incomes.forEach(category => {
+    categoryIncomeDropdown.innerHTML += `<option value="${category.value}">${category.text}</option>`;
+  });
+}
+
+console.log(categories);
 
 function checkInputConfirm(e) {
   if (e.key !== 'Enter') {
@@ -155,7 +170,7 @@ function writeToScreen() {
     }
   }, 0);
 
-  totalBalance.textContent = `Total balans: ${totalTransactionBalance}`;
+  totalBalance.textContent = `Total balans: ${totalTransactionBalance} kr`;
 }
 
 function deletetTransaction(e) {
