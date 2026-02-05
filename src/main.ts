@@ -4,14 +4,13 @@ import './style.css';
 /**
  *  x   Ett fält för att mata in en utgift (belopp och beskrivning)
  *  x   Ett fält för att mata in en inkomst (belopp och beskrivning)
- *      Bredvid varje budgetpost ska det finnas en radera-knapp
- *          (när utskrivet i list)
- *      Det ska visas en balans (inkomster minus utgifter)
- *          - anpassas vid borttagning av värde i list
- *      Balansens ska färgkodas beroende på om det är ett positivt eller negativt värde
+ *  x   Bredvid varje budgetpost ska det finnas en radera-knapp (när utskrivet i list)
+ *  x   Det ska visas en balans (inkomster minus utgifter)
+ *  x       - anpassas vid borttagning av värde i list
+ *  x   Balansens ska färgkodas beroende på om det är ett positivt eller negativt värde
  *  x   Balansen ska uppdateras varje gång en ny utgift eller inkomst matas in
  *  x   Till varje budgetpost ska det gå att välja en kategori från en dropdown-lista (select)
- *      Informationen ska sparas i local storage så att när användaren kommer till sidan nästa gång, så ska informationen finnas kvar. Nytt
+ *  x   Informationen ska sparas i local storage så att när användaren kommer till sidan nästa gång, så ska informationen finnas kvar. Nytt
  *      Kategorierna ska läsas in via JSON. Vi går igenom detta på lektionen.
  */
 
@@ -28,12 +27,12 @@ const incomeAmount = document.querySelector('#incomeAmount');
 const noteIncome = document.querySelector('#noteIncome');
 const categoryIncome = document.querySelector('#categoryIncome');
 
-const balance = document.querySelector('#totalBalance');
+const totalBalance = document.querySelector('#totalBalance');
 
 const registerBtn = document.querySelector('#register');
 
 // ----------------------------------------------------------------------
-// ----------------------------- annat sätt -----------------------------
+// -------------------------- funktioner osv  ---------------------------
 // ----------------------------------------------------------------------
 
 registerBtn.addEventListener('click', addTransaction);
@@ -134,7 +133,7 @@ function writeToScreen() {
     }
 
     html += `
-      <li class="${typeClass}">${operatorAmount} kr - ${t.note} (${t.category})
+      <li class="${typeClass}">${operatorAmount} kr: ${t.note} (${t.category})
         <button class="delete" data-id="${index}">Radera</button>
       </li>`;
   });
@@ -148,15 +147,15 @@ function writeToScreen() {
   });
 
   // testa reduce istället: summa-balance
-  const totalTransactionBalance = transactions.reduce((currentBalance, transaction) => {
-    if (transaction.type === 'income') {
-      return currentBalance + transaction.amount;
+  const totalTransactionBalance = transactions.reduce((currentBalance, t) => {
+    if (t.type === 'income') {
+      return currentBalance + t.amount;
     } else {
-      return currentBalance - transaction.amount;
+      return currentBalance - t.amount;
     }
   }, 0);
 
-  totalBalance.textContent = totalTransactionBalance;
+  totalBalance.textContent = `Total balans: ${totalTransactionBalance}`;
 }
 
 function deletetTransaction(e) {
@@ -178,8 +177,10 @@ readFromLocalStorage();
 writeToScreen();
 
 /*
-// ---------------------- 1 sätt att göra det på  ----------------------
-// --------------------------- första koden  ---------------------------
+// ------------------ första koden innan LS och JSON -------------------
+// ----------------------- kvar för egen skull  ------------------------
+// ---------------------------------------------------------------------
+
 registerBtn.addEventListener('click', registerTransaction => {
   registerTransaction.preventDefault();
 
