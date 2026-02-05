@@ -6,10 +6,10 @@ import './style.css';
  *  x   Ett fält för att mata in en inkomst (belopp och beskrivning)
  *      Bredvid varje budgetpost ska det finnas en radera-knapp
  *          (när utskrivet i list)
- *  x   Det ska visas en balans (inkomster minus utgifter)
+ *      Det ska visas en balans (inkomster minus utgifter)
  *          - anpassas vid borttagning av värde i list
- *  x   Balansens ska färgkodas beroende på om det är ett positivt eller negativt värde
- *  x   Balansen ska uppdateras varje gång en ny utgift eller inkomst matas in
+ *      Balansens ska färgkodas beroende på om det är ett positivt eller negativt värde
+ *      Balansen ska uppdateras varje gång en ny utgift eller inkomst matas in
  *  x   Till varje budgetpost ska det gå att välja en kategori från en dropdown-lista (select)
  *      Informationen ska sparas i local storage så att när användaren kommer till sidan nästa gång, så ska informationen finnas kvar. Nytt
  *      Kategorierna ska läsas in via JSON. Vi går igenom detta på lektionen.
@@ -25,19 +25,18 @@ const incomeAmount = document.querySelector('#incomeAmount');
 const noteIncome = document.querySelector('#noteIncome');
 const categoryIncome = document.querySelector('#categoryIncome');
 
-/*
-const balance = document.querySelector('#balance');
-const list = document.querySelector('#list');*/ //anv endast i första kodförsöket
+const balance = document.querySelector('#totalBalance');
+//const list = document.querySelector('#list'); //anv endast i första kodförsöket
 
 const registerBtn = document.querySelector('#register');
-const deleteBtn = document.querySelector('#deleteBtn');
+//const deleteBtn = document.querySelector('#deleteBtn'); //endast för att testa LS behövs ej nu
+//deleteBtn.addEventListener('click', deleteFromLocalStorage);
 
 // --------------------- annat sätt ----------------------
 // ---------- Local Storage och lite JSON f.4/2 ----------
 
 registerBtn.addEventListener('click', addTransaction);
 //noteExpense.addEventListener('keydown', checkInputConfirm);
-deleteBtn.addEventListener('click', deleteFromLocalStorage);
 
 let transactions = []; //sparar alla transaktioner
 const LS_DB_ID = 'transactions';
@@ -121,7 +120,7 @@ function writeToScreen() {
 
   transactions.forEach((t, index) => {
     html += `
-      <li>${t.amount} - ${t.note} (${t.category})
+      <li>${t.amount} kr - ${t.note} (${t.category})
         <button class="delete" data-id="${index}">Radera</button>
       </li>`;
   });
@@ -133,6 +132,17 @@ function writeToScreen() {
   document.querySelectorAll('button.delete').forEach(btn => {
     btn.addEventListener('click', deletetTransaction);
   });
+
+  // testa reduce istället: summa-balance
+  const totalTransactionBalance = transactions.reduce((currentBalance, transaction) => {
+    if (transaction.type === 'income') {
+      return currentBalance + transaction.amount;
+    } else {
+      return currentBalance - transaction.amount;
+    }
+  }, 0);
+
+  totalBalance.textContent = totalTransactionBalance;
 }
 
 function deletetTransaction(e) {
