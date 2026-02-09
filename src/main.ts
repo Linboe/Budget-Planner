@@ -8,7 +8,7 @@ import categories from './categories.json';
  *  x   Bredvid varje budgetpost ska det finnas en radera-knapp (när utskrivet i list)
  *  x   Det ska visas en balans (inkomster minus utgifter)
  *  x       - anpassas vid borttagning av värde i list
- *  x   Balansens ska färgkodas beroende på om det är ett positivt eller negativt värde
+ *     Balansens ska färgkodas beroende på om det är ett positivt eller negativt värde
  *  x   Balansen ska uppdateras varje gång en ny utgift eller inkomst matas in
  *  x   Till varje budgetpost ska det gå att välja en kategori från en dropdown-lista (select)
  *  x   Informationen ska sparas i local storage så att när användaren kommer till sidan nästa gång, så ska informationen finnas kvar. Nytt
@@ -22,11 +22,11 @@ import categories from './categories.json';
 
 const expenseAmount = document.querySelector('#expenseAmount');
 const noteExpense = document.querySelector('#noteExpense');
-const categoryExpenseDropdown = document.querySelector('#categoryExpenseDropdown');
+const catExpenseDropdown = document.querySelector('#categoryExpenseDropdown');
 
 const incomeAmount = document.querySelector('#incomeAmount');
 const noteIncome = document.querySelector('#noteIncome');
-const categoryIncomeDropdown = document.querySelector('#categoryIncomeDropdown');
+const catIncomeDropdown = document.querySelector('#categoryIncomeDropdown');
 
 const totalBalance = document.querySelector('#totalBalance');
 
@@ -60,36 +60,36 @@ const LS_DB_ID = 'transactions';
 function addTransaction() {
   const incomeValue = Number(incomeAmount.value);
   const incomeNote = noteIncome.value.trim();
-  const incomeCategoryDropdown = categoryIncomeDropdown.value;
+  const incomecatDropdown = catIncomeDropdown.value;
 
   if (incomeValue !== 0 && incomeNote !== '') {
     transactions.push({
       amount: incomeValue,
       note: incomeNote,
-      category: incomeCategoryDropdown,
+      cat: incomecatDropdown,
       type: 'income',
     });
   }
 
   const expenseValue = Number(expenseAmount.value);
   const expenseNote = noteExpense.value.trim();
-  const expenseCategoryDropdown = categoryExpenseDropdown.value;
+  const expensecatDropdown = catExpenseDropdown.value;
 
   if (expenseValue !== 0 && expenseNote !== '') {
     transactions.push({
       amount: expenseValue,
       note: expenseNote,
-      category: expenseCategoryDropdown,
+      cat: expensecatDropdown,
       type: 'expense',
     });
   }
 
   incomeAmount.value = '';
   noteIncome.value = '';
-  categoryIncomeDropdown.value = '';
+  catIncomeDropdown.value = '';
   expenseAmount.value = '';
   noteExpense.value = '';
-  categoryExpenseDropdown.value = '';
+  catExpenseDropdown.value = '';
 
   saveToLocalStorage();
   writeToScreen();
@@ -99,15 +99,15 @@ function addTransaction() {
 --------------------------- Kategorier JSON ----------------------------
 ------------------------------------------------------------------------
 */
-if (categoryExpenseDropdown) {
-  categories.expenses.forEach(category => {
-    categoryExpenseDropdown.innerHTML += `<option value="${category.value}">${category.text}</option>`;
+if (catExpenseDropdown) {
+  categories.expenses.forEach(cat => {
+    catExpenseDropdown.innerHTML += `<option value="${cat.value}">${cat.text}</option>`;
   });
 }
 
-if (categoryIncomeDropdown) {
-  categories.incomes.forEach(category => {
-    categoryIncomeDropdown.innerHTML += `<option value="${category.value}">${category.text}</option>`;
+if (catIncomeDropdown) {
+  categories.incomes.forEach(cat => {
+    catIncomeDropdown.innerHTML += `<option value="${cat.value}">${cat.text}</option>`;
   });
 }
 
@@ -183,7 +183,7 @@ function writeToScreen() {
 
     html += `
     <div class="transactionList">
-      <li class="${typeClass}">${operatorAmount} kr: ${t.note} (${t.category})
+      <li class="${typeClass}">${operatorAmount} kr: ${t.note} (${t.cat})
         <button class="delete material-symbols-outlined" data-id="${index}">delete</button>
       </li>
     </div>`;
@@ -213,6 +213,15 @@ function writeToScreen() {
   }, 0);
 
   totalBalance.textContent = `Total balans: ${totalTransactionBalance} kr`;
+
+  // färgkoda balansen
+  if (totalTransactionBalance > 0) {
+    totalBalance.style.color = 'green';
+  } else if (totalTransactionBalance < 0) {
+    totalBalance.style.color = 'red';
+  } else {
+    totalBalance.style.color = 'gray';
+  }
 }
 
 /*
@@ -251,7 +260,7 @@ registerBtn.addEventListener('click', registerTransaction => {
     transactions.push({
       amount: Number(expenseAmount.value),
       note: noteExpense.value,
-      category: categoryExpense.value,
+      cat: catExpense.value,
       type: 'expense',
     });
   }
@@ -260,7 +269,7 @@ registerBtn.addEventListener('click', registerTransaction => {
     transactions.push({
       amount: Number(incomeAmount.value),
       note: noteIncome.value,
-      category: categoryIncome.value,
+      cat: catIncome.value,
       type: 'income',
     });
   }
@@ -282,7 +291,7 @@ function registerTransactions() {
       operatorAmount = `${transaction.amount}`;
     }
 
-    li.textContent = `${operatorAmount} kr ${transaction.note} (${transaction.category})`;
+    li.textContent = `${operatorAmount} kr ${transaction.note} (${transaction.cat})`;
     list.appendChild(li);
 
     // extra class för färg
