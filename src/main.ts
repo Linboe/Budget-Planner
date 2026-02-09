@@ -262,13 +262,14 @@ function deletetTransaction(e: Event) {
   writeToScreen();
 }
 
+/*anv ej denna
 function deleteFromLocalStorage() {
   localStorage.removeItem(LS_DB_ID);
   transactions = [];
 
   deleteFromLocalStorage();
   writeToScreen(); //kom ihåg detta så det syns att det tagits bort
-}
+}*/
 
 readFromLocalStorage();
 writeToScreen();
