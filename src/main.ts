@@ -1,4 +1,3 @@
-// @ts-nocheck
 import './style.css';
 import categories from './categories.json';
 
@@ -8,7 +7,7 @@ import categories from './categories.json';
  *  x   Bredvid varje budgetpost ska det finnas en radera-knapp (när utskrivet i list)
  *  x   Det ska visas en balans (inkomster minus utgifter)
  *  x       - anpassas vid borttagning av värde i list
- *     Balansens ska färgkodas beroende på om det är ett positivt eller negativt värde
+ *  x   Balansens ska färgkodas beroende på om det är ett positivt eller negativt värde
  *  x   Balansen ska uppdateras varje gång en ny utgift eller inkomst matas in
  *  x   Till varje budgetpost ska det gå att välja en kategori från en dropdown-lista (select)
  *  x   Informationen ska sparas i local storage så att när användaren kommer till sidan nästa gång, så ska informationen finnas kvar. Nytt

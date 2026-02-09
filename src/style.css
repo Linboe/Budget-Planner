@@ -6,8 +6,8 @@ body {
 h1 {
   color: rgb(213, 255, 231);
   padding-bottom: 18px;
-  font-size: 3rem;
-  font-family: 'Poppins', sans-serif;
+  font-size: 4rem;
+  font-family: 'Audiowide', sans-serif;
   font-weight: 600;
   font-style: normal;
 }
@@ -39,6 +39,22 @@ label,
   font-weight: 600;
 }
 
+/* ------------------------------------------------------------------- */
+/* ---------------------------- formulär ----------------------------- */
+/* ------------------------------------------------------------------- */
+
+.dropdown {
+  background-color: rgb(10, 6, 29);
+  border-radius: 8px;
+  padding: 5px 36px;
+  border-color: white;
+  border-width: 1.25px;
+}
+
+.dropdown:hover {
+  border-color: rgb(120, 156, 254);
+}
+
 form {
   display: flex;
   flex-direction: row;
@@ -65,7 +81,7 @@ input {
 .registerBtn {
   display: block;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 60px;
   height: 40px;
   border-radius: 8px;
   border: none;
@@ -73,18 +89,6 @@ input {
   color: rgb(10, 6, 29);
   padding-inline: 10px;
   font-weight: bold;
-}
-
-.dropdown {
-  background-color: rgb(10, 6, 29);
-  border-radius: 8px;
-  padding: 5px 36px;
-  border-color: white;
-  border-width: 1.25px;
-}
-
-.dropdown:hover {
-  border-color: rgb(120, 156, 254);
 }
 
 /* ------------------------------------------------------------------- */
