@@ -5,7 +5,6 @@ body {
 
 h1 {
   color: rgb(213, 255, 231);
-  padding-bottom: 18px;
   font-size: 4rem;
   font-family: 'Audiowide', sans-serif;
   font-weight: 600;
@@ -86,7 +85,7 @@ input {
 .registerBtn {
   display: block;
   margin: 0 auto;
-  margin-top: 60px;
+  margin-top: 30px;
   height: 40px;
   border-radius: 8px;
   border: none;
@@ -101,7 +100,7 @@ input {
 /* ------------------------------------------------------------------- */
 
 .transactionList {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 ul li {
@@ -109,8 +108,8 @@ ul li {
 }
 
 .totalBalance {
-  margin-top: 60px;
-  margin-bottom: 40px;
+  margin-top: 40px;
+  margin-bottom: 20px;
   background-color: rgb(213, 255, 231);
   padding-block: 10px;
   color: rgb(10, 6, 29);

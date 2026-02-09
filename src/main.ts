@@ -266,6 +266,7 @@ function deleteFromLocalStorage() {
   localStorage.removeItem(LS_DB_ID);
   transactions = [];
 
+  deleteFromLocalStorage();
   writeToScreen(); //kom ihåg detta så det syns att det tagits bort
 }
 
