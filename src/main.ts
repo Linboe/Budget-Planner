@@ -182,16 +182,18 @@ function writeToScreen() {
     }
 
     html += `
+    <div class="transactionList">
       <li class="${typeClass}">${operatorAmount} kr: ${t.note} (${t.category})
-        <button class="delete" data-id="${index}">Radera</button>
-      </li>`;
+        <button class="delete material-symbols-outlined" data-id="${index}">delete</button>
+      </li>
+    </div>`;
   });
 
   html += '</ul>';
 
   dataHtmlEl.innerHTML = html;
 
-  //deleteBtn v
+  //deleteBtn
   document.querySelectorAll('button.delete').forEach(btn => {
     btn.addEventListener('click', deletetTransaction);
   });
@@ -215,7 +217,7 @@ function writeToScreen() {
 
 /*
 ------------------------------------------------------------------------
---------------------- ta bort en transaktion från ----------------------
+------------------------ ta bort en transaktion ------------------------
 ------------------------------------------------------------------------
 */
 function deletetTransaction(e) {

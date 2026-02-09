@@ -40,20 +40,32 @@ fieldset {
 }
 
 span,
-input,
-button {
+input {
   display: block;
   margin-bottom: 10px;
+}
+
+.registerBtn {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  height: 40px;
 }
 
 /* ------------------------------------------------------------------- */
 /* --------------------- transaktioner utskrivna --------------------- */
 /* ------------------------------------------------------------------- */
+
+.transactionList {
+  margin-bottom: 20px;
+}
+
 ul li {
   list-style: none;
 }
 
 .totalBalance {
+  margin-top: 40px;
   font-weight: bold;
 }
 
@@ -63,4 +75,11 @@ ul li {
 
 .income {
   color: rgb(0, 173, 0);
+}
+
+button.delete {
+  font-size: 1rem;
+  margin-left: 10px;
+  position: relative;
+  top: 4px;
 }
