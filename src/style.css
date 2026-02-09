@@ -25,14 +25,16 @@ label,
 .income,
 .expense,
 .balance,
-button {
+button,
+.dropdown {
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
   font-size: 0.75rem;
   font-style: normal;
 }
 
-label {
+label,
+.dropdown {
   color: rgb(255, 255, 255);
   font-weight: 600;
 }
@@ -71,6 +73,18 @@ input {
   color: rgb(10, 6, 29);
   padding-inline: 10px;
   font-weight: bold;
+}
+
+.dropdown {
+  background-color: rgb(10, 6, 29);
+  border-radius: 8px;
+  padding: 5px 36px;
+  border-color: white;
+  border-width: 1.25px;
+}
+
+.dropdown:hover {
+  border-color: rgb(120, 156, 254);
 }
 
 /* ------------------------------------------------------------------- */
