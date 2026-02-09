@@ -19,26 +19,35 @@ import categories from './categories.json';
 //const deleteBtn = document.querySelector('#deleteBtn'); //endast för att testa LS behövs ej nu
 //deleteBtn.addEventListener('click', deleteFromLocalStorage); //endast för att testa LS behövs ej nu
 
-const expenseAmount = document.querySelector('#expenseAmount');
-const noteExpense = document.querySelector('#noteExpense');
-const catExpenseDropdown = document.querySelector('#categoryExpenseDropdown');
+const expenseAmount = document.querySelector('#expenseAmount') as HTMLInputElement | null;
+const noteExpense = document.querySelector('#noteExpense') as HTMLInputElement | null;
+const catExpenseDropdown = document.querySelector('#categoryExpenseDropdown') as HTMLSelectElement | null;
 
-const incomeAmount = document.querySelector('#incomeAmount');
-const noteIncome = document.querySelector('#noteIncome');
-const catIncomeDropdown = document.querySelector('#categoryIncomeDropdown');
+const incomeAmount = document.querySelector('#incomeAmount') as HTMLInputElement | null;
+const noteIncome = document.querySelector('#noteIncome') as HTMLInputElement | null;
+const catIncomeDropdown = document.querySelector('#categoryIncomeDropdown') as HTMLSelectElement | null;
 
-const totalBalance = document.querySelector('#totalBalance');
+const totalBalance = document.querySelector('#totalBalance') as HTMLElement | null;
 
-const registerBtn = document.querySelector('#register');
+const registerBtn = document.querySelector('#register') as HTMLButtonElement | null;
 
 // ----------------------------------------------------------------------
 // -------------------------- funktioner osv  ---------------------------
 // ----------------------------------------------------------------------
 
-registerBtn.addEventListener('click', addTransaction);
-//noteExpense.addEventListener('keydown', checkInputConfirm);
+if (registerBtn) {
+  registerBtn.addEventListener('click', addTransaction);
+}
 
-let transactions = []; //sparar alla transaktioner
+interface Transaction {
+  //ts
+  amount: number;
+  note: string;
+  cat: string;
+  type: 'income' | 'expense';
+}
+
+let transactions: Transaction[] = []; //sparar alla transaktioner
 const LS_DB_ID = 'transactions';
 
 /*
@@ -47,7 +56,9 @@ const LS_DB_ID = 'transactions';
 ------------------------------------------------------------------------
 */
 [incomeAmount, noteIncome, expenseAmount, noteExpense].forEach(input => {
-  input.addEventListener('keydown', checkInputConfirm);
+  if (input) {
+    input.addEventListener('keydown', checkInputConfirm);
+  }
 });
 
 /*
@@ -57,6 +68,10 @@ const LS_DB_ID = 'transactions';
 */
 
 function addTransaction() {
+  if (!incomeAmount || !noteIncome || !catIncomeDropdown || !expenseAmount || !noteExpense || !catExpenseDropdown) {
+    return;
+  }
+
   const incomeValue = Number(incomeAmount.value);
   const incomeNote = noteIncome.value.trim();
   const incomecatDropdown = catIncomeDropdown.value;
@@ -115,7 +130,7 @@ if (catIncomeDropdown) {
 ----------------- för att Enter ska fungera vid input ------------------
 ------------------------------------------------------------------------
 */
-function checkInputConfirm(e) {
+function checkInputConfirm(e: KeyboardEvent) {
   if (e.key !== 'Enter') {
     return;
   }
@@ -159,8 +174,12 @@ function readFromLocalStorage() {
 ----------------------- skriva ut transaktioner ------------------------
 ------------------------------------------------------------------------
 */
-const dataHtmlEl = document.querySelector('#transactions');
+const dataHtmlEl = document.querySelector('#transactions') as HTMLElement | null;
 function writeToScreen() {
+  if (!dataHtmlEl) {
+    return;
+  }
+
   let html = '<ul>';
 
   transactions.forEach((t, index) => {
@@ -211,6 +230,10 @@ function writeToScreen() {
     }
   }, 0);
 
+  if (!totalBalance) {
+    return;
+  }
+
   totalBalance.textContent = `Total balans: ${totalTransactionBalance} kr`;
 
   // ta bort gamla färgklasser
@@ -231,8 +254,8 @@ function writeToScreen() {
 ------------------------ ta bort en transaktion ------------------------
 ------------------------------------------------------------------------
 */
-function deletetTransaction(e) {
-  const id = Number(e.target.dataset.id);
+function deletetTransaction(e: Event) {
+  const id = Number((e.target as HTMLElement).dataset.id);
 
   transactions.splice(id, 1); //1 visar att endast en grej ska raderas
   saveToLocalStorage();
