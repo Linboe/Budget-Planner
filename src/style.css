@@ -107,16 +107,16 @@ ul li {
   color: rgb(10, 6, 29);
 }
 
+.balance-zero {
+  color: rgb(10, 6, 29);
+}
+
 .balance-positive {
-  color: rgb(213, 255, 231);
+  color: rgb(40, 131, 79);
 }
 
 .balance-negative {
-  color: rgb(253, 140, 64);
-}
-
-.balance-zero {
-  color: rgb(255, 255, 255);
+  color: rgb(158, 70, 12);
 }
 
 .expense {

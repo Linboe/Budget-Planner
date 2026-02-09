@@ -214,13 +214,16 @@ function writeToScreen() {
 
   totalBalance.textContent = `Total balans: ${totalTransactionBalance} kr`;
 
+  // ta bort gamla färgklasser
+  totalBalance.classList.remove('balance-positive', 'balance-negative', 'balance-zero');
+
   // färgkoda balansen
   if (totalTransactionBalance > 0) {
-    totalBalance.style.color = 'green';
+    totalBalance.classList.add('balance-positive');
   } else if (totalTransactionBalance < 0) {
-    totalBalance.style.color = 'red';
+    totalBalance.classList.add('balance-negative');
   } else {
-    totalBalance.style.color = 'gray';
+    totalBalance.classList.add('balance-zero');
   }
 }
 
