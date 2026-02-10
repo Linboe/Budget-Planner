@@ -1,4 +1,4 @@
-import './style.css';
+import './style.scss';
 import categories from './categories.json';
 
 /**
