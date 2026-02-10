@@ -47,7 +47,7 @@ interface Transaction {
   type: 'income' | 'expense';
 }
 
-let transactions: Transaction[] = []; //sparar alla transaktioner
+let transactions: Transaction[] = []; //sparar alla transaktioner i array
 const LS_DB_ID = 'transactions';
 
 /*
@@ -148,7 +148,7 @@ function saveToLocalStorage() {
   const stringified = JSON.stringify(transactions);
 
   localStorage.setItem(LS_DB_ID, stringified); //detta värde måste vara unikt för varje input
-  console.log('Data saved.');
+  // console.log('Data saved.');
 }
 
 /*
