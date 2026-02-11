@@ -19,17 +19,17 @@ import categories from './categories.json';
 //const deleteBtn = document.querySelector('#deleteBtn'); //endast för att testa LS behövs ej nu
 //deleteBtn.addEventListener('click', deleteFromLocalStorage); //endast för att testa LS behövs ej nu
 
-const expenseAmount = document.querySelector('#expenseAmount') as HTMLInputElement | null;
-const noteExpense = document.querySelector('#noteExpense') as HTMLInputElement | null;
-const catExpenseDropdown = document.querySelector('#categoryExpenseDropdown') as HTMLSelectElement | null;
+const expenseAmount: HTMLInputElement | null = document.querySelector('#expenseAmount');
+const noteExpense: HTMLInputElement | null = document.querySelector('#noteExpense');
+const catExpenseDropdown: HTMLSelectElement | null = document.querySelector('#categoryExpenseDropdown');
 
-const incomeAmount = document.querySelector('#incomeAmount') as HTMLInputElement | null;
-const noteIncome = document.querySelector('#noteIncome') as HTMLInputElement | null;
-const catIncomeDropdown = document.querySelector('#categoryIncomeDropdown') as HTMLSelectElement | null;
+const incomeAmount: HTMLInputElement | null = document.querySelector('#incomeAmount');
+const noteIncome: HTMLInputElement | null = document.querySelector('#noteIncome');
+const catIncomeDropdown: HTMLSelectElement | null = document.querySelector('#categoryIncomeDropdown');
 
-const totalBalance = document.querySelector('#totalBalance') as HTMLElement | null;
+const totalBalance: HTMLElement | null = document.querySelector('#totalBalance');
 
-const registerBtn = document.querySelector('#register') as HTMLButtonElement | null;
+const registerBtn: HTMLButtonElement | null = document.querySelector('#register');
 
 // ----------------------------------------------------------------------
 // -------------------------- funktioner osv  ---------------------------
@@ -174,7 +174,7 @@ function readFromLocalStorage() {
 ----------------------- skriva ut transaktioner ------------------------
 ------------------------------------------------------------------------
 */
-const dataHtmlEl = document.querySelector('#transactions') as HTMLElement | null;
+const dataHtmlEl: HTMLElement | null = document.querySelector('#transactions');
 function writeToScreen() {
   if (!dataHtmlEl) {
     return;
@@ -232,7 +232,7 @@ function writeToScreen() {
 
   if (!totalBalance) {
     return;
-  }
+  } //OBS va gjorde denna checka igen
 
   totalBalance.textContent = `Total balans: ${totalTransactionBalance} kr`;
 
