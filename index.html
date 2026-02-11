@@ -28,57 +28,62 @@
 </head>
 
 <body>
-  <h1>Budget Planner</h1>
-  <h2>Ny transaktion</h2>
-  <form id="budgetForm"> <!--id=budgetform endast kvar för gammal kod sparat för egen del-->
-    <fieldset>
-      <label>
-        <span>Utgift</span>
-        <input id="expenseAmount" type="number">
-      </label>
+  <header>
+    <h1>Budget Planner</h1>
+    <h2>Ny transaktion</h2>
+  </header>
 
-      <label>
-        <span>Anteckning</span>
-        <input id="noteExpense" type="text">
-      </label>
+  <main>
+    <form id="budgetForm"> <!--id=budgetform endast kvar för gammal kod sparat för egen del-->
+      <fieldset>
+        <label>
+          <span>Utgift</span>
+          <input id="expenseAmount" type="number">
+        </label>
 
-      <div>
-        <label for="categoryExpenseDropdown" class="visually-hidden">Välj kategori</label>
-        <select class="dropdown" id="categoryExpenseDropdown" name="categoryExpense">
-          <option value="" disabled selected>Välj kategori</option>
-        </select>
+        <label>
+          <span>Anteckning</span>
+          <input id="noteExpense" type="text">
+        </label>
 
-      </div>
-    </fieldset>
+        <div>
+          <label for="categoryExpenseDropdown" class="visually-hidden">Välj kategori</label>
+          <select class="dropdown" id="categoryExpenseDropdown" name="categoryExpense">
+            <option value="" disabled selected>Välj kategori</option>
+          </select>
 
-    <fieldset>
-      <label>
-        <span>Inkomst</span>
-        <input id="incomeAmount" type="number">
-      </label>
+        </div>
+      </fieldset>
 
-      <label>
-        <span>Anteckning</span>
-        <input id="noteIncome" type="text">
-      </label>
+      <fieldset>
+        <label>
+          <span>Inkomst</span>
+          <input id="incomeAmount" type="number">
+        </label>
 
-      <div>
-        <label for="categoryIncomeDropdown" class="visually-hidden">Välj kategori</label>
-        <select class="dropdown" id="categoryIncomeDropdown" name="categoryIncome">
-          <option value="" disabled selected>Välj kategori</option>
-        </select>
-      </div>
-    </fieldset>
-  </form>
-  <button type="button" class="registerBtn" id="register">Registrera</button>
+        <label>
+          <span>Anteckning</span>
+          <input id="noteIncome" type="text">
+        </label>
 
-  <div id="totalBalance" class="totalBalance">0</div>
-  <div id="transactions">
-    <!-- nedan anv. endast till första kodförsöken INNAN LS + JSON
+        <div>
+          <label for="categoryIncomeDropdown" class="visually-hidden">Välj kategori</label>
+          <select class="dropdown" id="categoryIncomeDropdown" name="categoryIncome">
+            <option value="" disabled selected>Välj kategori</option>
+          </select>
+        </div>
+      </fieldset>
+    </form>
+    <button type="button" class="registerBtn" id="register">Registrera</button>
+
+    <div id="totalBalance" class="totalBalance">0</div>
+    <div id="transactions">
+      <!-- nedan anv. endast till första kodförsöken INNAN LS + JSON
     <ul id="list"></ul> 
     <button id="deleteBtn"></button>
     -->
-  </div>
+    </div>
+  </main>
 
   <footer></footer>
 
