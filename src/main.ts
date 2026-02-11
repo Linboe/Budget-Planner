@@ -39,7 +39,7 @@ if (registerBtn) {
   registerBtn.addEventListener('click', addTransaction);
 }
 
-interface Transaction {
+interface ITransaction {
   //ts
   amount: number;
   note: string;
@@ -47,7 +47,7 @@ interface Transaction {
   type: 'income' | 'expense';
 }
 
-let transactions: Transaction[] = []; //sparar alla transaktioner i array
+let transactions: ITransaction[] = []; //sparar alla transaktioner i array
 const LS_DB_ID = 'transactions';
 
 /*
@@ -70,7 +70,7 @@ const LS_DB_ID = 'transactions';
 function addTransaction() {
   if (!incomeAmount || !noteIncome || !catIncomeDropdown || !expenseAmount || !noteExpense || !catExpenseDropdown) {
     return;
-  }
+  } //! pga så många if annars...
 
   const incomeValue = Number(incomeAmount.value);
   const incomeNote = noteIncome.value.trim();
@@ -255,7 +255,7 @@ function writeToScreen() {
 ------------------------------------------------------------------------
 */
 function deletetTransaction(e: Event) {
-  const id = Number((e.target as HTMLElement).dataset.id);
+  const id = Number((e.target as HTMLElement).dataset.id); //eller e: HTMLElement?
 
   transactions.splice(id, 1); //1 visar att endast en grej ska raderas
   saveToLocalStorage();
