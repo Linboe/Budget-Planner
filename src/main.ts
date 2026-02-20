@@ -14,11 +14,6 @@ import categories from './categories.json';
  *  x   Kategorierna ska läsas in via JSON. Vi går igenom detta på lektionen.
  */
 
-//const budgetForm = document.querySelector('#budgetForm'); //anv endast i första kodförsöket
-//const list = document.querySelector('#list'); //anv endast i första kodförsöket
-//const deleteBtn = document.querySelector('#deleteBtn'); //endast för att testa LS behövs ej nu
-//deleteBtn.addEventListener('click', deleteFromLocalStorage); //endast för att testa LS behövs ej nu
-
 const expenseAmount: HTMLInputElement | null = document.querySelector('#expenseAmount');
 const noteExpense: HTMLInputElement | null = document.querySelector('#noteExpense');
 const catExpenseDropdown: HTMLSelectElement | null = document.querySelector('#categoryExpenseDropdown');
@@ -60,6 +55,20 @@ const LS_DB_ID = 'transactions';
     input.addEventListener('keydown', checkInputConfirm);
   }
 });
+
+/*
+------------------------------------------------------------------------
+----------------- för att Enter ska fungera vid input ------------------
+------------------------------------------------------------------------
+*/
+function checkInputConfirm(e: KeyboardEvent) {
+  if (e.key !== 'Enter') {
+    return;
+  }
+  e.preventDefault(); // för att inte formuläret ska skickas varje gång man trycker enter
+
+  addTransaction();
+}
 
 /*
 ------------------------------------------------------------------------
@@ -123,20 +132,6 @@ if (catIncomeDropdown) {
   categories.incomes.forEach(cat => {
     catIncomeDropdown.innerHTML += `<option value="${cat.value}">${cat.text}</option>`;
   });
-}
-
-/*
-------------------------------------------------------------------------
------------------ för att Enter ska fungera vid input ------------------
-------------------------------------------------------------------------
-*/
-function checkInputConfirm(e: KeyboardEvent) {
-  if (e.key !== 'Enter') {
-    return;
-  }
-  e.preventDefault(); // för att inte formuläret ska skickas varje gång man trycker enter
-
-  addTransaction();
 }
 
 /*
@@ -232,7 +227,7 @@ function writeToScreen() {
 
   if (!totalBalance) {
     return;
-  } //OBS va gjorde denna checka igen
+  }
 
   totalBalance.textContent = `Total balans: ${totalTransactionBalance} kr`;
 
@@ -262,80 +257,5 @@ function deletetTransaction(e: Event) {
   writeToScreen();
 }
 
-/*anv ej denna
-function deleteFromLocalStorage() {
-  localStorage.removeItem(LS_DB_ID);
-  transactions = [];
-
-  deleteFromLocalStorage();
-  writeToScreen(); //kom ihåg detta så det syns att det tagits bort
-}*/
-
 readFromLocalStorage();
 writeToScreen();
-
-/*
-// ------------------- OBS IGNORERA DENNA KOD NEDAN --------------------
-// ------------------ första koden innan LS och JSON -------------------
-// ----------------------- kvar för egen skull  ------------------------
-// ---------------------------------------------------------------------
-
-registerBtn.addEventListener('click', registerTransaction => {
-  registerTransaction.preventDefault();
-
-  if (expenseAmount.value) {
-    transactions.push({
-      amount: Number(expenseAmount.value),
-      note: noteExpense.value,
-      cat: catExpense.value,
-      type: 'expense',
-    });
-  }
-
-  if (incomeAmount.value) {
-    transactions.push({
-      amount: Number(incomeAmount.value),
-      note: noteIncome.value,
-      cat: catIncome.value,
-      type: 'income',
-    });
-  }
-
-  registerTransactions();
-});
-
-function registerTransactions() {
-  list.innerHTML = '';
-
-  transactions.forEach(transaction => {
-    const li = document.createElement('li');
-
-    // sätta (-) framför utgifter i listan
-    let operatorAmount;
-    if (transaction.type === 'expense') {
-      operatorAmount = `-${transaction.amount}`;
-    } else {
-      operatorAmount = `${transaction.amount}`;
-    }
-
-    li.textContent = `${operatorAmount} kr ${transaction.note} (${transaction.cat})`;
-    list.appendChild(li);
-
-    // extra class för färg
-    li.classList.add(transaction.type);
-    list.appendChild(li);
-  });
-
-  // testa reduce istället: summa-balance
-  const totalBalance = transactions.reduce((currentBalance, transaction) => {
-    if (transaction.type === 'income') {
-      return currentBalance + transaction.amount;
-    } else {
-      return currentBalance - transaction.amount;
-    }
-  }, 0);
-
-  balance.textContent = totalBalance;
-  budgetForm.reset();
-}
-  */
